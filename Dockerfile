@@ -1,5 +1,5 @@
 FROM python:3.6
-MAINTAINER binux <roy@binux.me>
+MAINTAINER core <corezheng@qq.com>
 
 # install phantomjs
 RUN mkdir -p /opt/phantomjs \
