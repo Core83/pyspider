@@ -23,6 +23,8 @@ RUN npm install puppeteer express
 # install requirements
 COPY requirements.txt /opt/pyspider/requirements.txt
 RUN pip install -r /opt/pyspider/requirements.txt
+RUN pip uninstall werkzeug
+RUN pip install werkzeug==0.16.1
 
 # add all repo
 ADD ./ /opt/pyspider
