@@ -308,8 +308,16 @@ def decode_unicode_string(string):
     """
     Decode string encoded by `unicode_string`
     """
-    if string.startswith('[BASE64-DATA]') and string.endswith('[/BASE64-DATA]'):
-        return base64.b64decode(string[len('[BASE64-DATA]'):-len('[/BASE64-DATA]')])
+    if isinstance(string, str):
+        str_base64_start = '[BASE64-DATA]'
+        str_base64_ends = '[/BASE64-DATA]'
+    elif isinstance(string, bytes):
+        str_base64_start = b'[BASE64-DATA]'
+        str_base64_ends = b'[/BASE64-DATA]'
+    else:
+        return string
+    if string.startswith(str_base64_start) and string.endswith(str_base64_ends):
+        return base64.b64decode(string[len(str_base64_start):-len(str_base64_ends)])
     return string
 
 
