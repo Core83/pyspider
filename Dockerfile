@@ -10,7 +10,7 @@ RUN mkdir -p /opt/phantomjs \
         && rm phantomjs.tar.bz2
 # Fix Error: libssl_conf.so: cannot open shared object file: No such file or directory
 ENV OPENSSL_CONF=/etc/ssl/
-
+RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \  && echo 'Asia/Shanghai' >/etc/timezone \
 # install nodejs
 ENV NODEJS_VERSION=8.15.0 \
     PATH=$PATH:/opt/node/bin
@@ -28,6 +28,7 @@ RUN pip install werkzeug==0.16.1
 
 # add all repo
 ADD ./ /opt/pyspider
+
 
 # run test
 WORKDIR /opt/pyspider
