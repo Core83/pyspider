@@ -96,7 +96,7 @@ class PikaQueue(object):
         self.connection = pika.BlockingConnection(pika.URLParameters(self.amqp_url))
         self.channel = self.connection.channel()
         try:
-            self.channel.queue_declare(self.name)
+            self.channel.queue_declare(self.name, durable=True)
         except pika.exceptions.ChannelClosed:
             self.connection = pika.BlockingConnection(pika.URLParameters(self.amqp_url))
             self.channel = self.connection.channel()
@@ -105,7 +105,7 @@ class PikaQueue(object):
     @catch_error
     def qsize(self):
         with self.lock:
-            ret = self.channel.queue_declare(self.name, passive=True)
+            ret = self.channel.queue_declare(self.name, passive=True, durable=True)
         return ret.method.message_count
 
     def empty(self):
@@ -232,7 +232,7 @@ class AmqpQueue(PikaQueue):
                                               parsed.path.lstrip('/') or '%2F')).connect()
         self.channel = self.connection.channel()
         try:
-            self.channel.queue_declare(self.name)
+            self.channel.queue_declare(self.name, durable=True)
         except amqp.exceptions.PreconditionFailed:
             pass
         #self.channel.queue_purge(self.name)
@@ -241,7 +241,7 @@ class AmqpQueue(PikaQueue):
     def qsize(self):
         with self.lock:
             name, message_count, consumer_count = self.channel.queue_declare(
-                self.name, passive=True)
+                self.name, passive=True, durable=True)
         return message_count
 
     @catch_error
