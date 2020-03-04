@@ -213,6 +213,7 @@ class Processor(object):
         while not self._quit:
             try:
                 task, response = self.inqueue.get(timeout=1)
+                logger.info('task :%s ' % (task))
                 self.on_task(task, response)
                 self._exceptions = 0
             except Queue.Empty as e:
