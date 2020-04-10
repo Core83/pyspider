@@ -15,11 +15,11 @@ RUN echo "Asia/shanghai" > /etc/timezone;
 ENV NODEJS_VERSION=8.15.0 \
     PATH=$PATH:/opt/node/bin
 WORKDIR "/opt/node"
-RUN apt-get -qq update && apt-get -qq install -y python-devel curl ca-certificates libx11-xcb1 libxtst6 libnss3 libasound2 libatk-bridge2.0-0 libgtk-3-0 --no-install-recommends && \
+RUN apt-get -qq update && apt-get -qq install -y aptitude curl ca-certificates libx11-xcb1 libxtst6 libnss3 libasound2 libatk-bridge2.0-0 libgtk-3-0 --no-install-recommends && \
     curl -sL https://nodejs.org/dist/v${NODEJS_VERSION}/node-v${NODEJS_VERSION}-linux-x64.tar.gz | tar xz --strip-components=1 && \
     rm -rf /var/lib/apt/lists/*
 RUN npm install puppeteer express
-
+RUN  aptitude install -y python-dev
 # install requirements
 COPY requirements.txt /opt/pyspider/requirements.txt
 RUN pip install -r /opt/pyspider/requirements.txt
