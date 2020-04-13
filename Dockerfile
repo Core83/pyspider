@@ -19,7 +19,7 @@ RUN apt-get -qq update && apt-get -qq install -y aptitude curl ca-certificates l
     curl -sL https://nodejs.org/dist/v${NODEJS_VERSION}/node-v${NODEJS_VERSION}-linux-x64.tar.gz | tar xz --strip-components=1 && \
     rm -rf /var/lib/apt/lists/*
 RUN npm install puppeteer express
-RUN  aptitude install -y python-dev
+#RUN  aptitude install -y python-dev
 # install requirements
 COPY requirements.txt /opt/pyspider/requirements.txt
 RUN pip install -r /opt/pyspider/requirements.txt
